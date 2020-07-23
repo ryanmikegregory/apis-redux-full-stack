@@ -9,8 +9,31 @@ import axios from 'axios';
 
 
 class App extends Component {
+  componentDidMount() {
+    this.getAllBooks();
+  }
 
   // TODO - GET Book List from server
+  getAllBooks = () => {
+    this.props.history.push('/checkout')
+    // axios({
+    //   method: 'GET',
+    //   url: '/books'
+    // })
+
+    axios.get('/books')
+      .then((response) => {
+        console.log(response);
+        this.props.dispatch({
+          type: 'SET_BOOKS',
+          payload: response.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Something went terribly wrong!!!');
+      })
+  }
 
   render() {
     return (
