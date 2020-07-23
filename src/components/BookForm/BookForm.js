@@ -24,7 +24,22 @@ class BookForm extends Component {
     event.preventDefault();
     console.log(`Adding book`, this.state.newBook);
     // TODO - axios request to server to add book
+    this.postNewBook(this.state.newBook);
 
+  }
+
+  postNewBook(newBook) {
+    console.log(newBook);
+    axios.post('/books', newBook)
+      .then((response) => {
+        console.log('server post:', response.data);
+        // call to GET
+        this.props.getAllBooks();
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Could not save the new book. Sorry :(');
+      });
   }
 
   render() {
